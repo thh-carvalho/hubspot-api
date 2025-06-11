@@ -4,8 +4,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 var indexRouter = require('./routes/index');
+const hubspotService = require("./services/hubspotService")
 
 var app = express();
 
@@ -20,6 +20,21 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+
+app.post('/create-contact-hub', async (req, res, next) => {
+    try{
+        const hubspotResponse = await hubspotService.createContact()
+
+        res.status(200).json({
+            status: 'success',
+            'message': 'Teste lead send to Hub',
+            'hubspotResponse': hubspotResponse
+        })
+    }catch(error){
+        console.error('Error during test lead submission:', error.message);
+        next(error);
+    }
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
