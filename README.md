@@ -1,2 +1,2 @@
 ﻿# hubspot-api
-* Insert leads from a web Form to the HubSpot CRM
+* Insert leads from a web to the HubSpot CRM
